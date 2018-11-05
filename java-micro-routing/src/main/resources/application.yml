@@ -1,0 +1,18 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+zuul:
+  # ignored-services: "*"
+  prefix: /api
+  sensitiveHeaders: Cookie,Set-Cookie
+  # routes:
+    # serviceeta: /serviceeta/**
+    # licensingservice: /licensing/**
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+# serviceeta.ribbon.ReadTimeout: 10000
+logging:
+  level:
+    root: INFO
+    com.vkmbox: DEBUG

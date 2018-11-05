@@ -1,0 +1,7 @@
+# zuul.ignored-services: "*"
+# zuul:  
+  # routes:
+    # srveta: /srveta/**
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+srveta.ribbon.ReadTimeout: 10000
+srvgpsmonitoring.ribbon.ReadTimeout: 10000
