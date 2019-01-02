@@ -3,9 +3,7 @@ package vkmbox.micro.sys.keycloak.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,9 +12,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.keycloak.representations.idm.CredentialRepresentation;
+import org.springframework.util.StringUtils;
+import vkmbox.micro.sys.keycloak.dto.CredentialDto;
+import vkmbox.micro.sys.keycloak.dto.TokenDto;
+import vkmbox.micro.sys.keycloak.dto.UserDto;
 
 import java.util.List;
-import vkmbox.micro.sys.keycloak.dto.TokenDto;
+import java.util.ArrayList;
+import java.util.Collections;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService
@@ -37,26 +43,30 @@ public class UserService
   public UserService( RestTemplate restTemplate ) {
     this.restTemplate = restTemplate;
   }
-  
-  /*public UserRepresentation getUserRepresentation (UserDto userDto) {
-      if ( userDto.getCredentials() == null || userDto.getCredentials().size() == 0 )
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No credentials provided");
-      List<CredentialRepresentation> credentials = new ArrayList<>(userDto.getCredentials().size());
-      for ( CredentialDto dto : userDto.getCredentials() ) {
-        CredentialRepresentation credential = new CredentialRepresentation();
-        credential.setType(dto.getType().name());
-        credential.setValue(dto.getValue());
-        credentials.add(credential);
+
+  public UserRepresentation getUserRepresentation (UserDto userDto) {
+      List<CredentialRepresentation> credentials;
+      if ( userDto.getCredentials() == null || userDto.getCredentials().isEmpty() ) {
+        credentials = Collections.EMPTY_LIST;
+      } else {
+        credentials = new ArrayList<>(userDto.getCredentials().size());
+        for ( CredentialDto dto : userDto.getCredentials() ) {
+          CredentialRepresentation credential = new CredentialRepresentation();
+          credential.setType(dto.getType().name());
+          credential.setValue(dto.getValue());
+          credential.setTemporary(false);
+          credentials.add(credential);
+        }
       }
 
       UserRepresentation userRepresentation = new UserRepresentation();
       userRepresentation.setUsername(userDto.getUsername());
-      userRepresentation.setFirstName(userDto.getUsername());
+      userRepresentation.setFirstName(userDto.getFirstName());
       userRepresentation.setLastName(userDto.getLastName());
       userRepresentation.setEnabled(userDto.getEnabled());
       userRepresentation.setCredentials(credentials);
       return userRepresentation;
-  }*/
+  }
 
   private String getSystemToken() {
     String uri = String.format("%srealms/%s/protocol/openid-connect/token", authServerUrl, realm);
@@ -76,10 +86,17 @@ public class UserService
     return response.getBody() == null ? "" : response.getBody().getAccessToken();
     
   }
+
+  public List<UserRepresentation> getUsers( ) {
+    return getUsers( null );
+  }
   
-  public List<UserRepresentation> getUsers()
+  public List<UserRepresentation> getUsers( String userName )
   {
     String uri = String.format("%sadmin/realms/%s/users", authServerUrl, realm);
+    if ( StringUtils.isEmpty(user) == false ) {
+      uri += "?username=test" + userName;
+    }
     
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
@@ -92,4 +109,29 @@ public class UserService
     return response.getBody();
     
   }
+
+  public String addUser(UserDto dto)
+  {
+    String uri = String.format("%sadmin/realms/%s/users", authServerUrl, realm);
+    
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.set(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", getSystemToken()));
+    HttpEntity request = new HttpEntity( getUserRepresentation(dto), headers);
+
+    ResponseEntity<String> response = 
+      restTemplate.exchange( uri, HttpMethod.POST, request, String.class);
+    List<String> location = response.getHeaders() == null ? null : response.getHeaders().get("Location");
+    
+    if ( location != null && !location.isEmpty() && !StringUtils.isEmpty(location.get(0)) ) {
+      String value = location.get(0);
+      return value.substring(value.lastIndexOf("/") + 1);
+    } else {
+      List<UserRepresentation> users = getUsers(dto.getUsername());
+      if ( users == null || users.isEmpty() )
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User has not been created");
+      return users.get(0).getId();
+    }
+  }
 }
+//

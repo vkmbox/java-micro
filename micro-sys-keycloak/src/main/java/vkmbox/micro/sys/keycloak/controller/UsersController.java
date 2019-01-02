@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import vkmbox.micro.sys.keycloak.dto.UserDto;
 
 //TODO: Extract interface using feign client annotation
 @Slf4j
@@ -30,23 +33,16 @@ public class UsersController {
     @GetMapping("/all")
     public List<UserRepresentation> getUsers() {
         return userService.getUsers();
-//      Keycloak instance = getInstance(); //.get("31bf198e-9f55-4e9e-996b-0bc79acf81fc")
-//      return instance.realm(realm).users().list(); //.toRepresentation(); //.users().list();
     }
     
-    //@PostMapping("/add")
-    //public String addUser( @RequestBody UserDto userDto ) {
-//      Keycloak instance = getInstance(); //.get("31bf198e-9f55-4e9e-996b-0bc79acf81fc")
-//      return instance.realm(realm).users().create(userService.getUserRepresentation(userDto));
-    //}
+    @PostMapping("/add")
+    public String addUser( @RequestBody UserDto userDto ) {
+      return userService.addUser( userDto );
+    }
     
     @GetMapping("/test")
     public String getTest() {
       return "Ok";
     }
-    
-    /*private Keycloak getInstance() {
-      return Keycloak.getInstance(authServerUrl, realm, user, password, clientId, clientSecret); //, "security-admin-console"
-    }*/
     
 }
