@@ -1,4 +1,5 @@
-/java-micro-routing/target/
-/java-micro-users/target/
-/java-micro-routing/forklickroute.cmd
-/java-micro-users/forklickusers.cmd
+/micro-sys-routing/target/
+/micro-sys-keycloak/target/
+/micro-sys-routing/forklickroute.cmd
+/micro-sys-keycloak/forklickusers.cmd
+/micro-sys-keycloak/nbactions.xml
