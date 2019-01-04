@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose -f consul/docker-compose.yml stop
+docker-compose -f services/consul/docker-compose.yml stop

@@ -94,7 +94,7 @@ public class UserService
   public List<UserRepresentation> getUsers( String userName )
   {
     String uri = String.format("%sadmin/realms/%s/users", authServerUrl, realm);
-    if ( StringUtils.isEmpty(user) == false ) {
+    if ( StringUtils.isEmpty(userName) == false ) {
       uri += "?username=test" + userName;
     }
     
