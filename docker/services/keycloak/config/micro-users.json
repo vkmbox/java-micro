@@ -1,0 +1,99 @@
+{
+  "realm" : "micro",
+  "users" : [ {
+    "id" : "a004f230-c83a-4739-b491-733c2b551d2a",
+    "createdTimestamp" : 1541371170309,
+    "username" : "manager",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "1LK9xGHo+R6jQBVHdwHoYDnVY5vNmPJED5vVUr0JHVT5xLYfsLoLwB4bFpXAOGEqBEj19Zbh8O5TvYgSHhTDtA==",
+      "salt" : "G5+2GeptkPnn3yNyzjrmdA==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1541371192247,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "realm-management" : [ "view-users", "query-users", "manage-clients", "create-client", "realm-admin", "manage-users" ],
+      "micro-cli" : [ "uma_protection" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 1546199323,
+    "groups" : [ ]
+  }, {
+    "id" : "e8d1e734-3b0f-49dc-8235-bd0d8975efaa",
+    "createdTimestamp" : 1541358281190,
+    "username" : "service-account-admin-cli",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-admin-cli@placeholder.org",
+    "serviceAccountClientId" : "admin-cli",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "admin-cli" : [ "uma_protection" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "6ba8603d-e877-424d-a118-8851d06c5290",
+    "createdTimestamp" : 1541358647781,
+    "username" : "service-account-micro-cli",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-micro-cli@placeholder.org",
+    "serviceAccountClientId" : "micro-cli",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "micro-cli" : [ "uma_protection" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "31bf198e-9f55-4e9e-996b-0bc79acf81fc",
+    "createdTimestamp" : 1541357434566,
+    "username" : "user",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "kKbk7xpe1TmfrWeTwzriyWvFYYKgpkv+9k4/JNl6GIl7a2zrj0s1pGognRzGviwV8Bak+PVGoBdf+MjP5qNXAQ==",
+      "salt" : "4knGMd2B547k6wpdULppXg==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1541369468532,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "micro-cli" : [ "uma_protection", "user" ],
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
