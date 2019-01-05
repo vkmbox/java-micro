@@ -10,7 +10,8 @@ server:
         # instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
         
 keycloak:
-  auth-server-url: http://localhost:8180/auth/
+  auth-server-url: http://192.168.56.101:8180/auth/
+#  auth-server-url: http://localhost:8180/auth/
 #  auth-server-url: https://localhost:8444/auth/
   resource: micro-cli
   realm: micro

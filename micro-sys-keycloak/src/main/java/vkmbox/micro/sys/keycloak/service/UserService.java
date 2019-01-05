@@ -28,7 +28,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService
 {
   //@Value("${keycloak.auth-server-url}")
-  private String authServerUrl = "http://localhost:8180/auth/";
+  private String authServerUrl = "http://192.168.56.101:8180/auth/";
+  //private String authServerUrl = "http://localhost:8180/auth/";
   //@Value("${keycloak.realm}")
   private String realm = "micro";
   //@Value("${keycloak.resource}")
