@@ -17,26 +17,29 @@ import org.springframework.util.StringUtils;
 import vkmbox.micro.sys.keycloak.dto.CredentialDto;
 import vkmbox.micro.sys.keycloak.dto.TokenDto;
 import vkmbox.micro.sys.keycloak.dto.UserDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService
 {
-  //@Value("${keycloak.auth-server-url}")
-  private String authServerUrl = "http://192.168.56.101:8180/auth/";
-  //private String authServerUrl = "http://localhost:8180/auth/";
-  //@Value("${keycloak.realm}")
-  private String realm = "micro";
-  //@Value("${keycloak.resource}")
-  private String user = "manager";
-  private String password = "password";
-  private String clientId = "micro-cli";
-  private String clientSecret = "92acc719-4496-4bcf-95c4-4ac06d05490d";
+  @Value("${property.keycloak.authServerUrl}")
+  private String authServerUrl; //= "http://192.168.56.101:8180/auth/";
+  @Value("${property.keycloak.realm}")
+  private String realm; //= "micro";
+  @Value("${property.keycloak.user}")
+  private String user; //= "manager";
+  @Value("${property.keycloak.password}")
+  private String password; //= "password";
+  @Value("${property.keycloak.clientId}")
+  private String clientId; //= "micro-cli";
+  @Value("${property.keycloak.clientSecret}")
+  private String clientSecret; //= "92acc719-4496-4bcf-95c4-4ac06d05490d";
   
   private RestTemplate restTemplate;
   

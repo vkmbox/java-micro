@@ -10,11 +10,12 @@ server:
         # instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
         
 keycloak:
-  auth-server-url: http://192.168.56.101:8180/auth/
+  auth-server-url: ${property.keycloak.authServerUrl}
+#  auth-server-url: http://192.168.56.101:8180/auth/
 #  auth-server-url: http://localhost:8180/auth/
 #  auth-server-url: https://localhost:8444/auth/
-  resource: micro-cli
-  realm: micro
+  resource: ${property.keycloak.clientId}
+  realm: ${property.keycloak.realm}
   #ssl-required: none
   public-client: true
   # credentials.secret: 92acc719-4496-4bcf-95c4-4ac06d05490d
@@ -23,7 +24,7 @@ keycloak:
   # truststore: classpath:keycloack.keystore
   # truststore-password: password
 
-ribbon.http.client.enabled: true
+#ribbon.http.client.enabled: true
 logging:
   level:
     root: INFO

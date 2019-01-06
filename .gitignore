@@ -3,3 +3,5 @@
 /micro-sys-routing/forklickroute.cmd
 /micro-sys-keycloak/forklickusers.cmd
 /micro-sys-keycloak/nbactions.xml
+/micro-sys-keycloak/sys-keycloak-impl/target/
+/micro-sys-keycloak/sys-keycloak-intf/target/

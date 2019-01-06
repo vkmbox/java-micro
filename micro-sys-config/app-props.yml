@@ -1,0 +1,8 @@
+property:
+  keycloak:
+    authServerUrl: http://192.168.56.101:8180/auth/
+    clientSecret: 92acc719-4496-4bcf-95c4-4ac06d05490d
+    clientId: micro-cli
+    realm: micro
+    user: manager
+    password: password
