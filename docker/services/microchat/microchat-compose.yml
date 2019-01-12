@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  sys-routing:
+    container_name: sys-routing
+    image: microchat/sys-routing:latest
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+    ports:
+      - "7777:7777"
+    depends_on:
+      - consul
+    # deploy:
+      # resources:
+        # limits:
+          # cpus: '0.50'
+          # memory: 200m
