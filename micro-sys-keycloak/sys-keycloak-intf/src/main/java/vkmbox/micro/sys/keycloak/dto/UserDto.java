@@ -12,6 +12,7 @@ public class UserDto
   private String firstName;
   private String lastName;
   private String email;
+  private Boolean emailVerified = true;
   
   private List<CredentialDto> credentials;
 }

@@ -6,3 +6,4 @@
 /micro-sys-keycloak/sys-keycloak-impl/target/
 /micro-sys-keycloak/sys-keycloak-intf/target/
 /app-props/target/
+/$app-props(deprecated)/target

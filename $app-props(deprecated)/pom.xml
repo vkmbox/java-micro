@@ -50,36 +50,6 @@
       <artifactId>lombok</artifactId>
       <version>1.18.4</version>
     </dependency>
-    <!--dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-zuul</artifactId>
-      <version>1.4.5.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-consul-all</artifactId>
-      <version>2.0.1.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-consul-config</artifactId>
-      <version>2.0.1.RELEASE</version>      
-    </dependency>    
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-sleuth</artifactId>
-      <version>2.0.2.RELEASE</version>      
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-      <version>2.0.2.RELEASE</version>      
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency-->
   </dependencies>
   <build>
     <plugins>

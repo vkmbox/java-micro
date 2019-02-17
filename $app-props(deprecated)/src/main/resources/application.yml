@@ -6,3 +6,7 @@ spring:
       config:
         format: YAML
         section: config/app-props/data
+logging:
+  level:
+    root: INFO
+    vkmbox.micro: DEBUG

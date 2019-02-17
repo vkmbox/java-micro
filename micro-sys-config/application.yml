@@ -4,5 +4,3 @@ property:
     clientSecret: 92acc719-4496-4bcf-95c4-4ac06d05490d
     clientId: micro-cli
     realm: micro
-    user: manager
-    password: password

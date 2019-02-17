@@ -54,7 +54,7 @@
     </dependency>
     <!--Project dependencies-->
     <dependency>
-      <groupId>com.vkmbox.micro</groupId>
+      <groupId>vkmbox.micro</groupId>
       <artifactId>sys-keycloak-intf</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>

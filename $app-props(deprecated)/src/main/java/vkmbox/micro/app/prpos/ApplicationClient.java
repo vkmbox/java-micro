@@ -9,13 +9,10 @@ import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.yaml.snakeyaml.Yaml;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +31,7 @@ public class ApplicationClient
   @Value("${spring.cloud.consul.config.section}")
   private String configSection;
   
-  public Map<String, Object> getConsulProperties() throws IOException {
+  public Map<String, String> getConsulProperties() throws IOException {
     RestTemplate template = new RestTemplate();
     String uri = String.format("%s:%d/v1/kv/%s", consulHost, consulPort, configSection);
     ParameterizedTypeReference<List<ConsulResponce>> parameterizedTypeReference 
@@ -47,10 +44,12 @@ public class ApplicationClient
     }
     
     byte[] encode = Base64Utils.decodeFromString(responce.get(0).value);
-    Yaml yaml = new Yaml();  
-    try( InputStream in = new ByteArrayInputStream( encode ) ) {
-      Map<String, Object> tree = yaml.load( in );
-      https://stackoverflow.com/questions/48744919/how-to-access-the-innernested-key-value-in-an-yaml-file-using-snakeyaml-librar
+    
+    switch ( configFormat ) {
+    case "YAML":
+      return new YamlProperties().transform(encode);
+    default:
+      throw new UnsupportedOperationException(String.format("Format %s not supported", configFormat));
     }
   }
   

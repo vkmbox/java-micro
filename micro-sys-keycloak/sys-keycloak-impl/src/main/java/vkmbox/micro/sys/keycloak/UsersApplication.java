@@ -10,5 +10,5 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 public class UsersApplication {
     public static void main(String[] args) {
         SpringApplication.run(UsersApplication.class, args);
-    }    
+    }
 }
