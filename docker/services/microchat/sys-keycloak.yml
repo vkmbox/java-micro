@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  sys-keycloak:
+    container_name: sys-keycloak
+    image: microchat/sys-keycloak:latest
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+    ports:
+      - "60100:60100"
+    depends_on:
+      - consul
+      - keycloak
+    # deploy:
+      # resources:
+        # limits:
+          # cpus: '0.50'
+          # memory: 200m
