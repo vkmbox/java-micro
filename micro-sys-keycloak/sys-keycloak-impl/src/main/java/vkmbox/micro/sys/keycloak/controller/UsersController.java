@@ -1,20 +1,20 @@
 package vkmbox.micro.sys.keycloak.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import vkmbox.micro.sys.keycloak.dto.UserDto;
-import vkmbox.micro.sys.keycloak.dto.CredentialDto;
+import vkmbox.micro.lib.dto.UserDto;
+import vkmbox.micro.lib.dto.CredentialDto;
 import vkmbox.micro.sys.keycloak.service.UserService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Slf4j
 @RestController
-public class UsersController implements UserControllerInterface {
+public class UsersController implements SysKeycloakInterface {
     
   private final UserService userService;
 

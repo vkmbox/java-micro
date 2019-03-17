@@ -6,16 +6,16 @@
     <artifactId>lib-dependency</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-    
-  <artifactId>sys-keycloak</artifactId>
+      
+  <artifactId>app-users</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Microservice users</name>
-  <description>Users in Keycloack</description>
+  <name>Microservice logins</name>
+  <description>Logins in microchat</description>
 
   <modules>
-    <module>sys-keycloak-intf</module>
-    <module>sys-keycloak-impl</module>
-  </modules>
- 
+    <module>app-users-intf</module>
+    <module>app-users-impl</module>
+  </modules>  
+  
 </project>

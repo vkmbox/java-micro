@@ -7,3 +7,8 @@
 /micro-sys-keycloak/sys-keycloak-intf/target/
 /app-props/target/
 /$app-props(deprecated)/target
+/micro-sys-keycloak/sys-keycloak-impl/nb-configuration.xml
+/micro-lib-dto/target/
+/micro-sys-routing/nbactions.xml
+/micro-app-users/app-users-intf/target/
+/micro-app-users/app-users-impl/target/

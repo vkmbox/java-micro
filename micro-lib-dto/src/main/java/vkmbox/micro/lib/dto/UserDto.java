@@ -1,4 +1,4 @@
-package vkmbox.micro.sys.keycloak.dto;
+package vkmbox.micro.lib.dto;
 
 import java.util.List;
 import lombok.Getter;

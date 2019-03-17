@@ -1,8 +1,12 @@
 package vkmbox.micro.sys.keycloak.service;
 
+import vkmbox.micro.lib.dto.UserDto;
+import vkmbox.micro.lib.dto.TokenDto;
+import vkmbox.micro.lib.dto.CredentialDto;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -12,11 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.util.StringUtils;
-import vkmbox.micro.sys.keycloak.dto.CredentialDto;
-import vkmbox.micro.sys.keycloak.dto.TokenDto;
-import vkmbox.micro.sys.keycloak.dto.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

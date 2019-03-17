@@ -1,4 +1,4 @@
-package vkmbox.micro.sys.keycloak.dto;
+package vkmbox.micro.lib.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -3,15 +3,15 @@
 
   <parent>
     <groupId>vkmbox.micro</groupId>
-    <artifactId>sys-keycloak</artifactId>
+    <artifactId>lib-dependency</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  
-  <artifactId>sys-keycloak-intf</artifactId>
+      
+  <artifactId>lib-dto</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Microservice users(intf)</name>
-  <description>Users in Keycloack(intf)</description>
+  <name>Dto lib</name>
+  <description>Dto lib</description>
 
   <dependencies>
     <dependency>
@@ -21,16 +21,6 @@
     <dependency>
       <groupId>org.keycloak</groupId>
       <artifactId>keycloak-spring-boot-starter</artifactId>
-    </dependency>  
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-openfeign</artifactId>
-    </dependency>
-    <!--Project dependency-->
-    <dependency>
-      <groupId>vkmbox.micro</groupId>
-      <artifactId>lib-dto</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
   
