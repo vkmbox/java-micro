@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   consul:
@@ -18,6 +18,9 @@ services:
     #command: consul agent -server -data-dir /consul/data -ui-dir /ui -bootstrap-expect 1 -client=0.0.0.0 -advertise=127.0.0.1
     #-bind=172.16.231.11  -bootstrap-expect=2 -retry-join=172.16.231.12 -retry-join=172.16.231.13
     volumes:
+    #  - consul-data:/consul/data
       - /var/lib/consul/data:/consul/data
     #volumes:
     #  - ./consul-config/config.json:/consul/config/config.json
+#volumes:
+#  consul-data:

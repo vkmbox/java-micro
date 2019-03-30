@@ -1,0 +1,37 @@
+curl -fsSL https://raw.githubusercontent.com/CWSpear/local-persist/master/scripts/install.sh | sudo bash
+docker volume create -d local-persist -o mountpoint=/var/lib/consul/data --name=consul-data
+docker volume create -d local-persist -o mountpoint=/var/lib/postgres-micro/data --name=db-data
+
+#creating manager
+docker-machine create --driver virtualbox sw-master
+#creating worker1
+docker-machine create --driver virtualbox sw-worker-1
+#creating worker2
+docker-machine create --driver virtualbox sw-worker-2
+
+docker-machine ssh sw-master
+docker swarm init --advertise-addr 192.168.99.100
+docker swarm join-token manager
+ >>   docker swarm join --token SWMTKN-1-2haeqzgx7r05rnhkofy1q9e5gnh3p440qp5d7h0j6kp3wud3tw-ekdw7ryaqcsm11zmqp26ehfvc 192.168.99.100:2377
+exit
+
+docker-machine ssh sw-worker-1
+docker swarm join --token SWMTKN-1-2haeqzgx7r05rnhkofy1q9e5gnh3p440qp5d7h0j6kp3wud3tw-ekdw7ryaqcsm11zmqp26ehfvc 192.168.99.100:2377
+exit
+
+docker-machine ssh sw-worker-2
+docker swarm join --token SWMTKN-1-2haeqzgx7r05rnhkofy1q9e5gnh3p440qp5d7h0j6kp3wud3tw-ekdw7ryaqcsm11zmqp26ehfvc 192.168.99.100:2377
+exit
+
+eval $(docker-machine env sw-master) 
+#Swarm GUI:
+docker service create \
+	--name=viz \
+	--publish=8080:8080 \
+	--constraint=node.role==manager \
+	--mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+	dockersamples/visualizer
+#Command to watch services
+docker service ls
+#Command to watch tasks
+docker service ps vis

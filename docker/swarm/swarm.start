@@ -1,0 +1,4 @@
+docker-machine status sw-master
+docker-machine start sw-master
+docker-machine start sw-worker-1
+docker-machine start sw-worker-2
