@@ -19,8 +19,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.client.HttpClientErrorException;
+import vkmbox.micro.sys.keycloak.errors.UserError;
+import vkmbox.micro.sys.keycloak.errors.UserError.ErrorType;
 
 import java.util.List;
 import java.util.Arrays;
@@ -30,11 +31,6 @@ import java.util.Collections;
 @Service
 public class UserService
 {
-  private static final String USER_ALREADY_EXISTS = "User with username=%s already exists";
-  private static final String USER_NOT_CREATED = "User has not been created";
-  private static final String USER_NOT_EXISTS_ID = "User with id=%s not exists";
-  private static final String DELETING_MANAGER_PROHIBITED = "Deleting the user manager is prohibited";
-  
   private static final List<String> SYSTEM_USERS = Arrays.asList("manager");
   
   @Value("${property.keycloak.authServerUrl}")
@@ -64,36 +60,31 @@ public class UserService
   public String addUser(UserDto dto)
   {
     if ( getUserByName(dto.getUsername()) != null ) {
-      throw new ResponseStatusException(HttpStatus.CONFLICT
-        , String.format(USER_ALREADY_EXISTS, dto.getUsername()));
+      throw new UserError(ErrorType.USER_ALREADY_EXISTS, dto.getUsername());
     }
     
     String uri = getAuthPath();
     
-    HttpEntity request = new HttpEntity( getUserRepresentation(dto), getKeycloakHeader());
+    HttpEntity request = new HttpEntity( getUserRepresentationFromDto(dto), getKeycloakHeader());
     ResponseEntity<String> response = restTemplate.exchange( uri, HttpMethod.POST, request, String.class);
     List<String> location = response.getHeaders() == null ? null : response.getHeaders().get("Location");
     
     if ( location != null && !location.isEmpty() && !StringUtils.isEmpty(location.get(0)) ) {
-      String value = location.get(0);
-      return value.substring(value.lastIndexOf("/") + 1);
+        String value = location.get(0);
+        return value.substring(value.lastIndexOf("/") + 1);
     } else {
-      UserRepresentation userRepresentation = getUserByName(dto.getUsername());
-      if ( userRepresentation == null )
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, USER_NOT_CREATED);
-      return userRepresentation.getId();
+        throw new UserError(ErrorType.USER_NOT_CREATED);
     }
   }
 
   public String resetPassword(String uuid, CredentialDto dto)
   {
     if ( getUserById(uuid) == null ) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND
-        , String.format(USER_NOT_EXISTS_ID, uuid));
+      throw new UserError(ErrorType.USER_NOT_FOUND, uuid);
     }
     
     String uri = String.format("%s/%s/reset-password", getAuthPath(), uuid);
-    HttpEntity request = new HttpEntity( getCredentialRepresentation(dto), getKeycloakHeader() );
+    HttpEntity request = new HttpEntity( getCredentialRepresentationFromDto(dto), getKeycloakHeader() );
     ResponseEntity<String> response = 
       restTemplate.exchange( uri, HttpMethod.PUT, request, String.class);
     return response.getBody();
@@ -102,14 +93,10 @@ public class UserService
   public String deleteUser(String uuid)
   {
     UserRepresentation userRepresentation = getUserById(uuid);
-    if ( userRepresentation == null ) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND
-        , String.format(USER_NOT_EXISTS_ID, uuid));
-    }
     if ( SYSTEM_USERS.contains(userRepresentation.getUsername()) ) {
-      throw new ResponseStatusException(HttpStatus.FORBIDDEN, DELETING_MANAGER_PROHIBITED);
+      throw new UserError(ErrorType.DELETING_USER_MANAGER_PROHIBITED);
     }
-    
+
     String uri = String.format("%s/%s", getAuthPath(), uuid);
     HttpEntity request = new HttpEntity( getKeycloakHeader() );
     ResponseEntity<String> response = 
@@ -162,20 +149,20 @@ public class UserService
     return list != null ? list : Collections.EMPTY_LIST;
   }
   
-  private UserRepresentation getUserById( String userId ) {
-    String uri = getAuthPath() + "/" + userId;
+  public UserRepresentation getUserById( String uuid ) {
+    String uri = getAuthPath() + "/" + uuid;
     HttpEntity request = new HttpEntity(getKeycloakHeader());
     try {
-      ResponseEntity<UserRepresentation> response = 
-        restTemplate.exchange( uri, HttpMethod.GET, request
-          , UserRepresentation.class);
-      return response.getBody();
+        ResponseEntity<UserRepresentation> response = 
+          restTemplate.exchange( uri, HttpMethod.GET, request
+            , UserRepresentation.class);
+        return response.getBody();
     } catch ( HttpClientErrorException ex ) {
-      if ( ex.getStatusCode() == HttpStatus.NOT_FOUND ) {
-        return null;
-      } else {
-        throw ex;
-      }
+        if ( ex.getStatusCode() == HttpStatus.NOT_FOUND ) {
+            throw new UserError(ErrorType.USER_NOT_FOUND, uuid);
+        } else {
+            throw ex;
+        }
     }
   }
   
@@ -188,14 +175,14 @@ public class UserService
     return null;
   }
 
-  private UserRepresentation getUserRepresentation (UserDto userDto) {
+  private UserRepresentation getUserRepresentationFromDto(UserDto userDto) {
     List<CredentialRepresentation> credentials;
     if ( userDto.getCredentials() == null || userDto.getCredentials().isEmpty() ) {
       credentials = Collections.EMPTY_LIST;
     } else {
       credentials = new ArrayList<>(userDto.getCredentials().size());
       for ( CredentialDto dto : userDto.getCredentials() ) {
-        credentials.add(getCredentialRepresentation(dto));
+        credentials.add(getCredentialRepresentationFromDto(dto));
       }
     }
 
@@ -207,8 +194,15 @@ public class UserService
     userRepresentation.setCredentials(credentials);
     return userRepresentation;
   }
+
+  public UserDto getUserDtoFromRepresentationNoCredentials(UserRepresentation user) {
+      return new UserDto().setId(user.getId()).setUsername(user.getUsername())
+        .setEnabled(user.isEnabled()).setFirstName(user.getFirstName())
+        .setLastName(user.getLastName()).setEmail(user.getEmail())
+        .setEmailVerified(user.isEmailVerified());
+  }
   
-  private CredentialRepresentation getCredentialRepresentation(CredentialDto dto) {
+  private CredentialRepresentation getCredentialRepresentationFromDto(CredentialDto dto) {
     CredentialRepresentation credential = new CredentialRepresentation();
     credential.setType(dto.getType().name());
     credential.setValue(dto.getValue());
