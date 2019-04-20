@@ -10,7 +10,7 @@
   <artifactId>sys-keycloak-impl</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Microservice users(impl)</name>
+  <name>Authentication microservice(impl)</name>
   <description>Users in Keycloack(impl)</description>
   
   <dependencies>

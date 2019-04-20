@@ -19,4 +19,6 @@ public class UserDto
   private Boolean emailVerified = true;
   
   private List<CredentialDto> credentials;
+  private List<String> LinkedUsers;
+  private List<String> LinkedGroups;
 }

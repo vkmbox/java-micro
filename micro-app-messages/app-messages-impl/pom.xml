@@ -3,14 +3,14 @@
   
   <parent>
     <groupId>vkmbox.micro</groupId>
-    <artifactId>app-users</artifactId>
+    <artifactId>app-messages</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>app-users-impl</artifactId>
+  <artifactId>app-messages-impl</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Microservice users(impl)</name>
-  <description>Users in microchat(impl)</description>
+  <name>Microservice messages(impl)</name>
+  <description>Messages in microchat(impl)</description>
 
   <dependencies>
     <dependency>
@@ -51,7 +51,7 @@
       <artifactId>spring-cloud-sleuth-zipkin</artifactId>
     </dependency>
     <!--Project dependencies-->
-    <dependency>
+    <!--dependency>
       <groupId>vkmbox.micro</groupId>
       <artifactId>sys-keycloak-intf</artifactId>
       <version>0.0.1-SNAPSHOT</version>
@@ -60,7 +60,7 @@
       <groupId>vkmbox.micro</groupId>
       <artifactId>app-users-intf</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-    </dependency>
+    </dependency-->
     <!--Test dependencies-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

@@ -7,15 +7,15 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
       
-  <artifactId>app-users</artifactId>
+  <artifactId>app-groups</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Microservice users</name>
-  <description>Users in microchat</description>
+  <name>Microservice groups</name>
+  <description>User groups in microchat</description>
 
   <modules>
-    <module>app-users-intf</module>
-    <module>app-users-impl</module>
+    <module>app-groups-intf</module>
+    <module>app-groups-impl</module>
   </modules>  
   
 </project>
