@@ -1,0 +1,31 @@
+server:
+  port: 60200
+#uncomment when working with random port
+#server:
+#  port: ${PORT:0}
+# spring:
+  # cloud:
+    # consul:
+      # discovery:
+        # instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+        
+keycloak:
+  auth-server-url: ${property.keycloak.authServerUrl}
+#  auth-server-url: http://192.168.56.101:8180/auth/
+#  auth-server-url: http://localhost:8180/auth/
+#  auth-server-url: https://localhost:8444/auth/
+  resource: ${property.keycloak.clientId}
+  realm: ${property.keycloak.realm}
+  #ssl-required: none
+  public-client: true
+  # credentials.secret: 92acc719-4496-4bcf-95c4-4ac06d05490d
+  principal-attribute: preferred_username
+  # bearer-only: true
+  # truststore: classpath:keycloack.keystore
+  # truststore-password: password
+
+#ribbon.http.client.enabled: true
+logging:
+  level:
+    root: INFO
+    com.vkmbox: DEBUG

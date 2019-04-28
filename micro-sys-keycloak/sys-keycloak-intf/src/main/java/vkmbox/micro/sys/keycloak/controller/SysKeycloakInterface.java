@@ -16,25 +16,25 @@ import java.util.List;
 
 //TODO: add validation to dto objects
 @FeignClient("sys-routing/api/sys-keycloak")
-@RequestMapping("/v1.0.0/users")
+@RequestMapping("/v1.0.0/keycloak-users")
 public interface SysKeycloakInterface
 {
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getUsers();
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUser( @PathVariable String id );
+    public ResponseEntity<UserDto> getUser( @PathVariable("id") String id );
     
     @PostMapping("/add")
     public ResponseEntity<UserDto> addUser( @RequestBody UserDto userDto );
     
     @PutMapping("/{userid}/reset-password")
     public ResponseEntity<?> resetPassword
-        ( @PathVariable String userid
+        ( @PathVariable("userid") String userid
         , @RequestBody CredentialDto credentialDto 
         );
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser( @PathVariable String id );
+    public ResponseEntity<?> deleteUser( @PathVariable("id") String id );
     
 }

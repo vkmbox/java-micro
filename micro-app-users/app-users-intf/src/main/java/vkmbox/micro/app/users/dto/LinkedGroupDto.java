@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter @Setter
 public class LinkedGroupDto
 {
-    private String mainUser;
+    //private String mainUser;
     private String linkedGroup;
 }

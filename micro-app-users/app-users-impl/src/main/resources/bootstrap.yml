@@ -13,7 +13,7 @@ spring.zipkin.baseUrl: http://127.0.0.1:9422/
     # #client-auth: NEED
 spring:
   application:
-    name: sys-keycloak
+    name: app-users
   cloud:
     consul:
       port: 8500

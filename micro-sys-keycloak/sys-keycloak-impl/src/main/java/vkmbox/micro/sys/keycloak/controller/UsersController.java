@@ -38,7 +38,7 @@ public class UsersController implements SysKeycloakInterface {
     }
 
     @Override
-    public ResponseEntity<UserDto> getUser(@PathVariable String id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") String id) {
       return Optional.of(userService.getUserDtoFromRepresentationNoCredentials(userService.getUserById(id)))
         .map(ResponseEntity::ok)
         .orElseThrow(() -> new UserError(ErrorType.USER_NOT_FOUND, id));
@@ -54,13 +54,13 @@ public class UsersController implements SysKeycloakInterface {
     }
 
     @Override
-    public ResponseEntity<?> resetPassword( @PathVariable String userid
+    public ResponseEntity<?> resetPassword( @PathVariable("userid") String userid
       , @RequestBody CredentialDto credentialDto ) {
         return ResponseEntity.ok(userService.resetPassword(userid, credentialDto));
     }
 
     @Override
-    public ResponseEntity<?> deleteUser( @PathVariable String id )
+    public ResponseEntity<?> deleteUser( @PathVariable("id") String id )
     {
       return ResponseEntity.ok(userService.deleteUser(id));
     }
