@@ -3,6 +3,8 @@ package vkmbox.micro.sys.keycloak.service;
 import vkmbox.micro.lib.dto.UserDto;
 import vkmbox.micro.lib.dto.TokenDto;
 import vkmbox.micro.lib.dto.CredentialDto;
+import vkmbox.micro.lib.errors.ErrorType;
+import vkmbox.micro.lib.errors.ApplicationError;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
-import vkmbox.micro.sys.keycloak.errors.UserError;
-import vkmbox.micro.sys.keycloak.errors.UserError.ErrorType;
 
 import java.util.List;
 import java.util.Arrays;
@@ -60,7 +60,7 @@ public class UserService
   public String addUser(UserDto dto)
   {
     if ( getUserByName(dto.getUsername()) != null ) {
-      throw new UserError(ErrorType.USER_ALREADY_EXISTS, dto.getUsername());
+      throw new ApplicationError(ErrorType.USER_ALREADY_EXISTS, dto.getUsername());
     }
     
     String uri = getAuthPath();
@@ -73,14 +73,14 @@ public class UserService
         String value = location.get(0);
         return value.substring(value.lastIndexOf("/") + 1);
     } else {
-        throw new UserError(ErrorType.USER_NOT_CREATED);
+        throw new ApplicationError(ErrorType.USER_NOT_CREATED);
     }
   }
 
   public String resetPassword(String uuid, CredentialDto dto)
   {
     if ( getUserById(uuid) == null ) {
-      throw new UserError(ErrorType.USER_NOT_FOUND, uuid);
+      throw new ApplicationError(ErrorType.USER_NOT_FOUND, uuid);
     }
     
     String uri = String.format("%s/%s/reset-password", getAuthPath(), uuid);
@@ -94,7 +94,7 @@ public class UserService
   {
     UserRepresentation userRepresentation = getUserById(uuid);
     if ( SYSTEM_USERS.contains(userRepresentation.getUsername()) ) {
-      throw new UserError(ErrorType.DELETING_USER_MANAGER_PROHIBITED);
+      throw new ApplicationError(ErrorType.DELETING_USER_MANAGER_PROHIBITED);
     }
 
     String uri = String.format("%s/%s", getAuthPath(), uuid);
@@ -159,7 +159,7 @@ public class UserService
         return response.getBody();
     } catch ( HttpClientErrorException ex ) {
         if ( ex.getStatusCode() == HttpStatus.NOT_FOUND ) {
-            throw new UserError(ErrorType.USER_NOT_FOUND, uuid);
+            throw new ApplicationError(ErrorType.USER_NOT_FOUND, uuid);
         } else {
             throw ex;
         }

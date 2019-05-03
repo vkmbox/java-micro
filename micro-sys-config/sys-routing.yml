@@ -5,3 +5,4 @@
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
 sys-keycloak.ribbon.ReadTimeout: 10000
 sys-routing.ribbon.ReadTimeout: 10000
+app-users.ribbon.ReadTimeout: 10000

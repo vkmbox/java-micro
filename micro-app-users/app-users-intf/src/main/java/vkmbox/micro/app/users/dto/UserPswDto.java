@@ -7,5 +7,8 @@ import lombok.Setter;
 public class UserPswDto
 {
     private String user;
+    private String firstName;
+    private String lastName;
+    private String email;
     private byte[] password;
 }

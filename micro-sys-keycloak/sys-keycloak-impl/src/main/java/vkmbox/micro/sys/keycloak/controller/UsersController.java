@@ -3,10 +3,10 @@ package vkmbox.micro.sys.keycloak.controller;
 import lombok.extern.slf4j.Slf4j;
 import vkmbox.micro.lib.dto.UserDto;
 import vkmbox.micro.lib.dto.CredentialDto;
-import vkmbox.micro.sys.keycloak.errors.UserError;
-import vkmbox.micro.sys.keycloak.errors.UserError.ErrorType;
-import org.springframework.http.ResponseEntity;
+import vkmbox.micro.lib.errors.ErrorType;
+import vkmbox.micro.lib.errors.ApplicationError;
 import vkmbox.micro.sys.keycloak.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class UsersController implements SysKeycloakInterface {
     public ResponseEntity<UserDto> getUser(@PathVariable("id") String id) {
       return Optional.of(userService.getUserDtoFromRepresentationNoCredentials(userService.getUserById(id)))
         .map(ResponseEntity::ok)
-        .orElseThrow(() -> new UserError(ErrorType.USER_NOT_FOUND, id));
+        .orElseThrow(() -> new ApplicationError(ErrorType.USER_NOT_FOUND, id));
     }
 
     @Override

@@ -65,6 +65,11 @@
       <artifactId>app-users-intf</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>vkmbox.micro</groupId>
+      <artifactId>lib-errors</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
     <!--Test dependencies-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
