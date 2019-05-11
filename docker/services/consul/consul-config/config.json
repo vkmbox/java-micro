@@ -1,11 +1,6 @@
 {
-  "log_level": "INFO",
   "server": true,
-  "ui": true,
-  "addresses": {
-    "http": "127.0.0.1"
-  },
-  "ports": {
-    "http": 8500
-  }
+  "data_dir": "/consul/data",
+  "log_level": "INFO",
+  "ui": true
 }
