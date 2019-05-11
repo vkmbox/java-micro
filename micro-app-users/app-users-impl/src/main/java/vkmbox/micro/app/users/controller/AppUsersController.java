@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import vkmbox.micro.lib.dto.UserDto;
+import vkmbox.micro.lib.dto.TokenDto;
 import vkmbox.micro.app.users.dto.UserPswDto;
 import vkmbox.micro.app.users.dto.ResetPasswordDto;
 import vkmbox.micro.app.users.service.AppUsersService;
@@ -35,6 +36,11 @@ public class AppUsersController implements AppUsersInterface
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @Override
+    public ResponseEntity<TokenDto> getToken(@RequestBody UserPswDto userDto) {
+        return ResponseEntity.ok(service.getToken(userDto));
+    }
+    
     @Override
     public ResponseEntity<UserDto> disableUser(@PathVariable String id)
     {

@@ -1,6 +1,7 @@
 package vkmbox.micro.sys.keycloak.controller;
 
 import vkmbox.micro.lib.dto.UserDto;
+import vkmbox.micro.lib.dto.TokenDto;
 import vkmbox.micro.lib.dto.CredentialDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -33,6 +34,9 @@ public interface SysKeycloakInterface
         ( @PathVariable("userid") String userid
         , @RequestBody CredentialDto credentialDto 
         );
+        
+    @PutMapping("/get-token")
+    ResponseEntity<TokenDto> getToken( @RequestBody UserDto userDto );
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser( @PathVariable("id") String id );

@@ -3,8 +3,13 @@ package vkmbox.micro.lib.errors;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ApplicationError extends RuntimeException
 {
+    private static final Pattern FEIGN_MESSAGE = Pattern.compile("\"message\":\"([^\"]*)\"");
+    
     private final Object[] ids;
     private final ErrorType type;
     
@@ -35,11 +40,19 @@ public class ApplicationError extends RuntimeException
         return type.getStatus();
     }
 
-    //TODO: get message field form text:
-    //status 409 reading SysKeycloakInterface#addUser(UserDto); content:
-    //[{"logref":"manager4","message":"User with username=manager4 already exists","links":[]}]
     public ApplicationError( FeignException cause ) {
-        this.type = new ErrorType(cause.getMessage(), HttpStatus.valueOf(cause.status()));
+        String message = cause.getMessage();
+        Matcher matcher = FEIGN_MESSAGE.matcher(message);
+        if ( matcher.find() ) {
+            message = matcher.group(1);
+        }
+        HttpStatus status;
+        try {
+            status = HttpStatus.valueOf(cause.status());
+        } catch ( Exception ex ) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        this.type = new ErrorType(message, status);
         this.ids = null;
     }
     

@@ -1,12 +1,15 @@
 package vkmbox.micro.sys.keycloak.controller;
 
+import static vkmbox.micro.lib.dto.CredentialDto.Type.password;
+
 import lombok.extern.slf4j.Slf4j;
 import vkmbox.micro.lib.dto.UserDto;
-import vkmbox.micro.lib.dto.CredentialDto;
+import vkmbox.micro.lib.dto.TokenDto;
 import vkmbox.micro.lib.errors.ErrorType;
+import vkmbox.micro.lib.dto.CredentialDto;
+import org.springframework.http.ResponseEntity;
 import vkmbox.micro.lib.errors.ApplicationError;
 import vkmbox.micro.sys.keycloak.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,19 @@ public class UsersController implements SysKeycloakInterface {
     }
 
     @Override
+    public ResponseEntity<TokenDto> getToken(@RequestBody UserDto userDto) {
+        CredentialDto credential = null;
+        if (userDto.getCredentials() != null) {
+            credential = userDto.getCredentials().stream()
+                .filter(item -> password.equals(item.getType())).findFirst().get();
+        }
+        if ( credential == null ) {
+            throw new ApplicationError(ErrorType.NO_PASSWORD_SUPPLIED, userDto.getUsername());
+        }
+        return ResponseEntity.ok(userService.getToken(userDto.getUsername(), credential.getValue()));
+    }
+    
+    @Override
     public ResponseEntity<?> resetPassword( @PathVariable("userid") String userid
       , @RequestBody CredentialDto credentialDto ) {
         return ResponseEntity.ok(userService.resetPassword(userid, credentialDto));
@@ -64,4 +80,5 @@ public class UsersController implements SysKeycloakInterface {
     {
       return ResponseEntity.ok(userService.deleteUser(id));
     }
+
 }

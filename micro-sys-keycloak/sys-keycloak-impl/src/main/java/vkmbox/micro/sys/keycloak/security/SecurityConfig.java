@@ -59,9 +59,11 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter{
         http.csrf().disable()
                 //Check any income request!
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-                .authorizeRequests()
+                .and()
+            .authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/**/keycloak-users/add").permitAll()
+                .antMatchers("/**/keycloak-users/get-token").permitAll()
                 .anyRequest().authenticated();
           /*.antMatchers(HttpMethod.GET, "/**").hasRole("admin")
             .anyRequest().authenticated();*/

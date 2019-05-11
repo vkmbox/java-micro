@@ -9,5 +9,7 @@ import vkmbox.micro.lib.errors.ErrorType;
 @ControllerAdvice(annotations = RestController.class)
 public class AppUsersControllerAdvice extends ApplicationControllerAdvice {
     public static final ErrorType APP_USERS_USER_NOT_CREATED 
-        = new ErrorType("User not created, error code: %d", HttpStatus.INTERNAL_SERVER_ERROR);
+        = new ErrorType("User not created, http response code: %d", HttpStatus.INTERNAL_SERVER_ERROR);
+    public static final ErrorType NO_TOKEN_FOR_USER
+        = new ErrorType("No token for user, http response code: %d", HttpStatus.INTERNAL_SERVER_ERROR);
 }

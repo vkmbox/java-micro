@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>vkmbox.micro</groupId>
+	<artifactId>build-all</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>build-all project</name>
+	<description>build all modules project</description>
+  
+    <modules>
+        <module>micro-lib-dto</module>
+        <module>micro-lib-errors</module>
+        <module>micro-sys-routing</module>
+        <module>micro-sys-keycloak</module>
+        <module>micro-app-users</module>
+    </modules>
+
+</project>

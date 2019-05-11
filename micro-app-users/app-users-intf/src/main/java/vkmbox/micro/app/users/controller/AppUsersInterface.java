@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vkmbox.micro.lib.dto.UserDto;
 import vkmbox.micro.app.users.dto.UserPswDto;
 import vkmbox.micro.app.users.dto.ResetPasswordDto;
+import vkmbox.micro.lib.dto.TokenDto;
 
 @FeignClient("sys-routing/api/app-users")
 @RequestMapping("v1.0.0/users")
@@ -41,8 +42,7 @@ public interface AppUsersInterface
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser( @PathVariable String id );
     
-    /*@PutMapping("/get-token")
-    @ResponseStatus(HttpStatus.OK)
-    TokenDto getToken( @RequestBody UserPswDto userDto );*/
+    @PutMapping("/get-token")
+    ResponseEntity<TokenDto> getToken( @RequestBody UserPswDto userDto );
     
 }

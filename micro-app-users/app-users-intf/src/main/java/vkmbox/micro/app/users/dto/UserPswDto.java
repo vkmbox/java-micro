@@ -10,5 +10,6 @@ public class UserPswDto
     private String firstName;
     private String lastName;
     private String email;
+    //Base64 array of bytes
     private byte[] password;
 }

@@ -103,8 +103,8 @@ public class UserService
       restTemplate.exchange( uri, HttpMethod.DELETE, request, String.class);
     return response.getBody();
   }
-  
-  private String getSystemToken() {
+
+  public TokenDto getToken(String userValue, String passwordValue) {
     String uri = String.format("%srealms/%s/protocol/openid-connect/token", authServerUrl, realm);
     
     HttpHeaders headers = new HttpHeaders();
@@ -114,13 +114,17 @@ public class UserService
     map.add("grant_type", "password");
     map.add("client_id", clientId);
     map.add("client_secret", clientSecret);
-    map.add("username", user);
-    map.add("password", password);
+    map.add("username", userValue);
+    map.add("password", passwordValue);
 
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
     ResponseEntity<TokenDto> response = restTemplate.postForEntity( uri, request , TokenDto.class );
-    return response.getBody() == null ? "" : response.getBody().getAccessToken();
-    
+    return response.getBody();
+  }
+  
+  private String getSystemToken() {
+    TokenDto token = getToken(user, password);
+    return token == null ? "" : token.getAccessToken();
   }
   
   private String getAuthPath() {
