@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  vault:
+    container_name: vault
+    image: vault:1.2.1
+    volumes:
+      -  /var/lib/vault/logs:/vault/logs
+      -  /var/lib/vault/file:/vault/file
+      -  ./vault-config:/vault/config
+    ports:
+      - 6200:8200
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+      - VAULT_API_ADDR=http://0.0.0.1:8200
+    command: "vault server -config=/vault/config/config-consul.json"
+    depends_on:
+      - consul    
