@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2'
 
 services:
   keycloak:
@@ -7,6 +7,7 @@ services:
     volumes:
       #- /home/user/work/jproj/java-micro/docker/services/keycloak/config/micro-realm-export.json:/etc/settings/micro-realm-export.json
       - ../keycloak/config:/etc/settings
+      - ../keycloak/https:/etc/x509/https
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: db #db-keycloak
@@ -17,7 +18,11 @@ services:
       KEYCLOAK_PASSWORD: admin
       KEYCLOAK_IMPORT: /etc/settings/micro-realm-full.json
       #KEYCLOAK_IMPORT: /etc/settings/micro-users.json
+    networks:
+      micronet: 
+        ipv4_address: 172.16.238.4
     ports:
       - 8180:8080
+      - 8143:8443
     depends_on:
       - db

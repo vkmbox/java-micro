@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2'
 
 services:
   db:
@@ -8,6 +8,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=micro
+    networks:
+      micronet: 
+        ipv4_address: 172.16.238.2
     ports:
       - "5492:5432"
     volumes:
