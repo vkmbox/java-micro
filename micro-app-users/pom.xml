@@ -10,7 +10,7 @@
   <artifactId>app-users</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Microservice users</name>
+  <name>app-users</name>
   <description>Users in microchat</description>
 
   <modules>

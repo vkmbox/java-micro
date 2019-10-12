@@ -15,7 +15,7 @@ import vkmbox.micro.app.users.dto.ResetPasswordDto;
 import vkmbox.micro.lib.dto.TokenDto;
 
 @FeignClient("sys-routing/api/app-users")
-@RequestMapping("v1.0.0/users")
+@RequestMapping("/v1.0.0/users")
 public interface AppUsersInterface
 {
     @PostMapping("/register-with-username")

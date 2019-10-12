@@ -21,9 +21,9 @@ keycloak:
   # credentials.secret: 92acc719-4496-4bcf-95c4-4ac06d05490d
   principal-attribute: preferred_username
   # bearer-only: true
-  # truststore: classpath:keycloack.keystore
-  # truststore-password: password
-
+  truststore: classpath:ssl/root.p12
+  truststore-password: ${property.keycloak.truststore-password}
+  
 #ribbon.http.client.enabled: true
 logging:
   level:

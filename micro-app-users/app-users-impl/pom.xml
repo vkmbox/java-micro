@@ -9,7 +9,7 @@
   <artifactId>app-users-impl</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Microservice users(impl)</name>
+  <name>app-users(impl)</name>
   <description>Users in microchat(impl)</description>
 
   <dependencies>

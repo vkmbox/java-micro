@@ -10,7 +10,7 @@
   <artifactId>sys-keycloak-intf</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Authentication microservice(intf)</name>
+  <name>sys-keycloak(intf)</name>
   <description>Users in Keycloack(intf)</description>
 
   <dependencies>

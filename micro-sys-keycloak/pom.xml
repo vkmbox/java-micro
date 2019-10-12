@@ -10,7 +10,7 @@
   <artifactId>sys-keycloak</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Authentication microservice</name>
+  <name>sys-keycloak</name>
   <description>Users in Keycloack</description>
 
   <modules>
