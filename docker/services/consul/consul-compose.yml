@@ -1,9 +1,12 @@
-version: '3.7'
+version: '2'
 
 services:
   consul:
     container_name: consul
     image: consul:1.5.0
+    networks:
+      micronet: 
+        ipv4_address: 172.16.238.3
     ports:
       - 8500:8500
       - 8300:8300

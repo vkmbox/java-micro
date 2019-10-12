@@ -14,3 +14,4 @@
 /micro-app-users/app-users-impl/target/
 /micro-lib-errors/target/
 /micro-sys-keycloak/sys-keycloak-impl/src/main/resources/ssl
+/docker/services/keycloak/https/

@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2'
 
 services:
   sys-keycloak:
@@ -7,6 +7,9 @@ services:
     environment:
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
+    networks:
+      micronet: 
+        ipv4_address: 172.16.238.6
     ports:
       - "60100:60100"
     depends_on:
