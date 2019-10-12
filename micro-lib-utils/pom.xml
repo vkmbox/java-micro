@@ -7,11 +7,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
       
-  <artifactId>lib-errors</artifactId>
+  <artifactId>lib-utils</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>Lib errors</name>
-  <description>Lib errors</description>
+  <name>Lib utils</name>
+  <description>Lib utils</description>
 
   <dependencies>
     <dependency>
@@ -21,10 +21,14 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
-    </dependency>       
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
     </dependency>
   </dependencies>
   

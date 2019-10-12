@@ -4,9 +4,14 @@ services:
   sys-keycloak:
     container_name: sys-keycloak
     image: microchat/sys-keycloak:latest
+#    volumes:
+#      - ../keycloak/truststore:/ssl
     environment:
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
+     # - TRUST_STORE=classpath:ssl/root.p12
+     # - TRUST_STORE=//ssl//root.p12
+     # - TRUST_PSW=$${property.keycloak.truststore-password}
     networks:
       micronet: 
         ipv4_address: 172.16.238.6

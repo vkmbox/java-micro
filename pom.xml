@@ -13,7 +13,7 @@
   
     <modules>
         <module>micro-lib-dto</module>
-        <module>micro-lib-errors</module>
+        <module>micro-lib-utils</module>
         <module>micro-sys-routing</module>
         <module>micro-sys-keycloak</module>
         <module>micro-app-users</module>

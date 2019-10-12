@@ -17,7 +17,7 @@ spring:
   cloud:
     consul:
       port: 8500
-      host: 127.0.0.1
+      host: 192.168.56.101
       config:
         enabled: true
         format: YAML
