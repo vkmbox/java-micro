@@ -5,6 +5,7 @@ import vkmbox.micro.lib.dto.TokenDto;
 import vkmbox.micro.lib.dto.CredentialDto;
 import vkmbox.micro.lib.errors.ErrorType;
 import vkmbox.micro.lib.errors.ApplicationError;
+import vkmbox.micro.sys.keycloak.config.KeycloakConfig;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -27,30 +27,21 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 @Service
 public class UserService
 {
   private static final List<String> SYSTEM_USERS = Arrays.asList("manager");
-  
-  @Value("${property.keycloak.authServerUrl}")
-  private String authServerUrl;
-  @Value("${property.keycloak.realm}")
-  private String realm;
-  @Value("${property.keycloak.user}")
-  private String user;
-  @Value("${property.keycloak.password}")
-  private String password;
-  @Value("${property.keycloak.clientId}")
-  private String clientId;
-  @Value("${property.keycloak.clientSecret}")
-  private String clientSecret;
+  private static final String USER_ROLE = "user";
   
   private final RestTemplate restTemplate;
+  private final KeycloakConfig params;
   
   @Autowired
-  public UserService( RestTemplate restTemplate ) {
+  public UserService( RestTemplate restTemplate, KeycloakConfig keycloakConfig ) {
     this.restTemplate = restTemplate;
+    this.params = keycloakConfig;
   }
 
   public List<UserRepresentation> getUsers() {
@@ -62,12 +53,14 @@ public class UserService
     if ( getUserByName(dto.getUsername()) != null ) {
       throw new ApplicationError(ErrorType.USER_ALREADY_EXISTS, dto.getUsername());
     }
-    
-    String uri = getAuthPath();
-    
+    //Fix: assogn role user in client params.getClientId()
+    UserRepresentation userRepresentation = getUserRepresentationFromDto(dto);
+    userRepresentation.setClientRoles(Map.of(params.getClientId(), List.of(USER_ROLE)));
     HttpEntity request = new HttpEntity( getUserRepresentationFromDto(dto), getKeycloakHeader());
-    ResponseEntity<String> response = restTemplate.exchange( uri, HttpMethod.POST, request, String.class);
-    List<String> location = response.getHeaders() == null ? null : response.getHeaders().get("Location");
+    ResponseEntity<UserRepresentation> response = 
+        restTemplate.exchange( getAuthPath(), HttpMethod.POST, request, UserRepresentation.class);
+    List<String> location = 
+        response.getHeaders() == null ? null : response.getHeaders().get(HttpHeaders.LOCATION);
     
     if ( location != null && !location.isEmpty() && !StringUtils.isEmpty(location.get(0)) ) {
         String value = location.get(0);
@@ -105,15 +98,16 @@ public class UserService
   }
 
   public TokenDto getToken(String userValue, String passwordValue) {
-    String uri = String.format("%srealms/%s/protocol/openid-connect/token", authServerUrl, realm);
+    String uri = String.format("%srealms/%s/protocol/openid-connect/token"
+        , params.getAuthServerUrl(), params.getRealm());
     
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
     
     MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
     map.add("grant_type", "password");
-    map.add("client_id", clientId);
-    map.add("client_secret", clientSecret);
+    map.add("client_id", params.getClientId());
+    map.add("client_secret", params.getClientSecret());
     map.add("username", userValue);
     map.add("password", passwordValue);
 
@@ -123,12 +117,12 @@ public class UserService
   }
   
   private String getSystemToken() {
-    TokenDto token = getToken(user, password);
+    TokenDto token = getToken(params.getUser(), params.getPassword());
     return token == null ? "" : token.getAccessToken();
   }
   
   private String getAuthPath() {
-    return String.format("%sadmin/realms/%s/users", authServerUrl, realm);
+    return String.format("%sadmin/realms/%s/users", params.getAuthServerUrl(), params.getRealm());
   }
   
   private HttpHeaders getKeycloakHeader() {
@@ -196,6 +190,8 @@ public class UserService
     userRepresentation.setLastName(userDto.getLastName());
     userRepresentation.setEnabled(userDto.getEnabled());
     userRepresentation.setCredentials(credentials);
+    userRepresentation.setEmail(userDto.getEmail());
+    userRepresentation.setEmailVerified(userDto.getEmailVerified());
     return userRepresentation;
   }
 
@@ -215,4 +211,3 @@ public class UserService
   }
   
 }
-

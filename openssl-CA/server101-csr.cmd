@@ -1,0 +1,1 @@
+openssl req -new -key val/server101.key -out val/server101.csr -config ssl-101.cnf

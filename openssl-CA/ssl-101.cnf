@@ -1,0 +1,18 @@
+[ req ]
+default_bits       = 2048
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+prompt = no
+
+[ req_distinguished_name ]
+countryName         = XY
+stateOrProvinceName = Zurbagan 
+localityName        = Kitchen
+organizationName    = Domestic
+commonName          = 192.168.56.101
+
+[ req_ext ]
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = 192.168.56.101
+DNS.2 = 172.16.238.4

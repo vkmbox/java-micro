@@ -1,0 +1,1 @@
+openssl req -x509 -new -key val/rootCA.key -days 10000 -out val/rootCA.crt -config ssl-root.cnf

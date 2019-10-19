@@ -28,7 +28,7 @@ keycloak:
   # bearer-only: true
   # truststore: classpath:keycloack.keystore
   # truststore-password: password
-  truststore: classpath:ssl/root.p12
+  truststore: classpath:ssl/root.jks
   truststore-password: ${property.keycloak.truststore-password}  
 
 #ribbon.http.client.enabled: true

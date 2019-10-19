@@ -1,0 +1,8 @@
+PEM->DER
+openssl x509 -outform der -in val\rootCA.crt -out val\rootCA.der
+
+truststore in jks format(cert only) for java clients:
+keytool -import -alias microchat -file val\rootCA.crt -storetype JKS -keystore val\root.jks
+
+truststore in PKCS#12 format(key+cert) https://ru.wikipedia.org/wiki/PKCS12: 
+openssl pkcs12 -export -in val\rootCA.crt -inkey val\rootCA.key -name "microchat" -out val\root.p12

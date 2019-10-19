@@ -19,3 +19,5 @@
 /micro-app-users/app-users-impl/src/main/resources/ssl
 /micro-app-users/app-users-impl/start.cmd
 /micro-sys-keycloak/sys-keycloak-impl/start.cmd
+/micro-app-users/app-users-impl/nbactions.xml
+/openssl-CA/val

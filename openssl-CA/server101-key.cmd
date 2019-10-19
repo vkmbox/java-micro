@@ -1,0 +1,1 @@
+openssl genrsa -out val/server101.key 2048
