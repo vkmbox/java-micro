@@ -19,7 +19,6 @@ import java.net.URI;
 @RestController
 public class AppUsersController implements AppUsersInterface
 {
-    
     private final AppUsersService service;
     
     @Autowired
@@ -42,21 +41,21 @@ public class AppUsersController implements AppUsersInterface
     }
     
     @Override
-    public ResponseEntity<UserDto> disableUser(@PathVariable String id)
+    public ResponseEntity<UserDto> deleteUser(@PathVariable String id)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ResponseEntity.ok(service.deleteUser(id));
     }
 
     @Override
     public ResponseEntity<UserDto> getUser(@PathVariable String id)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ResponseEntity.ok(service.getUser(id));
     }
 
     @Override
     public ResponseEntity<UserDto> resetPassword(@PathVariable String id, @RequestBody ResetPasswordDto resetDto)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ResponseEntity.ok(service.resetPassword(id, resetDto));
     }
 
     @Override

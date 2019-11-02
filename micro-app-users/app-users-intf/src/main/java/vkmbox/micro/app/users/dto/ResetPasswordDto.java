@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter @Setter
 public class ResetPasswordDto
 {
-//    @JsonProperty("user")
-//    private String user;
+    //Base64 array of bytes
     @JsonProperty("old")
     private byte[] oldPassword;
+    //Base64 array of bytes
     @JsonProperty("new")
     private byte[] newPassword;
 }

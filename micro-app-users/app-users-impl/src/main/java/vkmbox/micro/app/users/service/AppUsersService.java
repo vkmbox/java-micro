@@ -14,6 +14,7 @@ import vkmbox.micro.lib.dto.CredentialDto;
 import vkmbox.micro.app.users.dto.UserPswDto;
 import vkmbox.micro.lib.dto.CredentialDto.Type;
 import vkmbox.micro.lib.errors.ApplicationError;
+import vkmbox.micro.app.users.dto.ResetPasswordDto;
 import vkmbox.micro.sys.keycloak.controller.SysKeycloakInterface;
 
 import java.util.List;
@@ -25,12 +26,11 @@ public class AppUsersService
     private final SysKeycloakInterface keycloak;
     
     @Autowired
-    public AppUsersService(SysKeycloakInterface keycloak){
+    public AppUsersService(SysKeycloakInterface keycloak) {
         this.keycloak = keycloak;
     }
 
-    public UserDto registerWithUsername(UserPswDto psw)
-    {
+    public UserDto registerWithUsername(UserPswDto psw) {
         UserDto dto = getUserFromUserPsw(psw);
         ResponseEntity<UserDto> response;
         try {
@@ -58,13 +58,40 @@ public class AppUsersService
         return response.getBody();
     }
     
+    public UserDto deleteUser(String id) {
+        UserDto dto = getUser(id);
+        keycloak.deleteUser(id);
+        return dto;
+    }
+    
+    public UserDto getUser(String id) {
+        ResponseEntity<UserDto> user = keycloak.getUser(id);
+        return user.getBody();
+    }
+    
+    public UserDto resetPassword(String id, ResetPasswordDto resetDto) {
+        UserDto dto = getUser(id);
+        UserPswDto psw = new UserPswDto()
+            .setUser(dto.getUsername()).setPassword(resetDto.getOldPassword());
+        getToken(psw);
+        CredentialDto credentialDto = new CredentialDto()
+            .setType(Type.password).setTemporary(Boolean.FALSE)
+            .setValue(getBase64FromString(resetDto.getNewPassword()));
+        keycloak.resetPassword(id, credentialDto);
+        return dto;
+    }
+    
     private UserDto getUserFromUserPsw(UserPswDto psw) {
         CredentialDto credentials = new CredentialDto().setType(Type.password)
-            .setValue(new String(Base64.getDecoder().decode(psw.getPassword())))
+            .setValue(getBase64FromString(psw.getPassword()))
             .setTemporary(false);
         return new UserDto().setUsername(psw.getUser())
             .setCredentials(List.of(credentials)).setEnabled(true)
             .setFirstName(psw.getFirstName()).setLastName(psw.getLastName())
             .setEmail(psw.getEmail());
+    }
+    
+    private String getBase64FromString(byte[] value) {
+        return new String(Base64.getDecoder().decode(value));
     }
 }

@@ -36,7 +36,7 @@ public interface SysKeycloakInterface
         );
         
     @PutMapping("/get-token")
-    ResponseEntity<TokenDto> getToken( @RequestBody UserDto userDto );
+    public ResponseEntity<TokenDto> getToken( @RequestBody UserDto userDto );
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser( @PathVariable("id") String id );

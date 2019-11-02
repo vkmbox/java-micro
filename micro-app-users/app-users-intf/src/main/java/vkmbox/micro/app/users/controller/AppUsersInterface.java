@@ -2,6 +2,7 @@ package vkmbox.micro.app.users.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +37,8 @@ public interface AppUsersInterface
     @PutMapping("/remove-linked-group/{id}")
     ResponseEntity<UserDto> removeLinkedGroup( @PathVariable String id, @RequestBody String linked );
 
-    @PutMapping("/disable-user/{id}")
-    ResponseEntity<UserDto> disableUser( @PathVariable String id );
+    @DeleteMapping("/{id}")
+    ResponseEntity<UserDto> deleteUser( @PathVariable String id );
     
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser( @PathVariable String id );
