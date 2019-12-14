@@ -3,7 +3,6 @@ package vkmbox.micro.app.users.service;
 import static vkmbox.micro.app.users.errors.AppUsersControllerAdvice.NO_TOKEN_FOR_USER;
 import static vkmbox.micro.app.users.errors.AppUsersControllerAdvice.APP_USERS_USER_NOT_CREATED;
 
-import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +32,11 @@ public class AppUsersService
     public UserDto registerWithUsername(UserPswDto psw) {
         UserDto dto = getUserFromUserPsw(psw);
         ResponseEntity<UserDto> response;
-        try {
-            response = keycloak.addUser(dto);
-        } catch (FeignException ex) {
-            throw new ApplicationError(ex);
-        }
+        //try {
+        response = keycloak.addUser(dto);
+        //} catch (FeignException ex) {
+        //    throw new ApplicationError(ex);
+        //}
         if ( HttpStatus.CREATED != response.getStatusCode() ) {
             throw new ApplicationError(APP_USERS_USER_NOT_CREATED, response.getStatusCode().value());
         }
@@ -47,11 +46,11 @@ public class AppUsersService
     public TokenDto getToken(UserPswDto psw) {
         UserDto dto = getUserFromUserPsw(psw);
         ResponseEntity<TokenDto> response;
-        try {
-            response = keycloak.getToken(dto);
-        } catch (FeignException ex) {
-            throw new ApplicationError(ex);
-        }
+        //try {
+        response = keycloak.getToken(dto);
+        //} catch (FeignException ex) {
+        //    throw new ApplicationError(ex);
+        //}
         if ( HttpStatus.OK != response.getStatusCode() ) {
             throw new ApplicationError(NO_TOKEN_FOR_USER, response.getStatusCode().value());
         }
@@ -91,6 +90,14 @@ public class AppUsersService
             .setEmail(psw.getEmail());
     }
     
+    /* To encode: 
+    **  1) convert to base64:12345->MTIzNDU=
+    **  2)
+    **  2a) convert to base64 once again: MTIzNDU=->TVRJek5EVT0=
+    **  or
+    **  2b) convert base64 to byte array:MTIzNDU=->4d 54 49 7a 4e 44 55 3d
+    **  3b) serialize byte array to json:4d 54 49 7a 4e 44 55 3d->TVRJek5EVT0=
+    */
     private String getBase64FromString(byte[] value) {
         return new String(Base64.getDecoder().decode(value));
     }

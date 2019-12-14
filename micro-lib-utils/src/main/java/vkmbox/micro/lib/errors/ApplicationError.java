@@ -1,14 +1,13 @@
 package vkmbox.micro.lib.errors;
 
-import feign.FeignException;
+//import feign.FeignException;
 import org.springframework.http.HttpStatus;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
 
-public class ApplicationError extends RuntimeException
-{
-    private static final Pattern FEIGN_MESSAGE = Pattern.compile("\"message\":\"([^\"]*)\"");
+public class ApplicationError extends RuntimeException {
+    //private static final Pattern FEIGN_MESSAGE = Pattern.compile("\"message\":\"([^\"]*)\"");
     
     private final Object[] ids;
     private final ErrorType type;
@@ -40,7 +39,7 @@ public class ApplicationError extends RuntimeException
         return type.getStatus();
     }
 
-    public ApplicationError( FeignException cause ) {
+    /*public ApplicationError( FeignException cause ) {
         String message = cause.getMessage();
         Matcher matcher = FEIGN_MESSAGE.matcher(message);
         if ( matcher.find() ) {
@@ -54,6 +53,6 @@ public class ApplicationError extends RuntimeException
         }
         this.type = new ErrorType(message, status);
         this.ids = null;
-    }
+    }*/
     
 }

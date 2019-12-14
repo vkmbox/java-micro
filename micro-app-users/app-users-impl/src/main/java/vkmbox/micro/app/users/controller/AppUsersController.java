@@ -27,11 +27,10 @@ public class AppUsersController implements AppUsersInterface
     }
 
     @Override
-    public ResponseEntity<UserDto> registerWithUsername(@RequestBody UserPswDto registerDto)
-    {
+    public ResponseEntity<UserDto> registerWithUsername(@RequestBody UserPswDto registerDto) {
         UserDto dto = service.registerWithUsername(registerDto);
         URI uri = MvcUriComponentsBuilder.fromController(getClass())
-          .path("/{id}").buildAndExpand(dto.getId()).toUri();        
+          .path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 

@@ -28,7 +28,7 @@ public class ApplicationConfig
         return restTemplate -> restTemplate.setRequestFactory(ribbonClientHttpRequestFactory);
     }*/
         
-    @Bean 
+    @Bean
     public RestTemplate restTemplate() throws Exception {
         return SslUtils.sslClientRestTemplate(trustStore, trustStorePassword);
     }

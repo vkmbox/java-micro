@@ -21,3 +21,4 @@
 /micro-sys-keycloak/sys-keycloak-impl/start.cmd
 /micro-app-users/app-users-impl/nbactions.xml
 /openssl-CA/val
+/micro-sys-config/encode/*.class
